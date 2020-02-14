@@ -230,7 +230,6 @@ spec:
     auditLogMaxSize: 100
     auditPolicyFile: /srv/kubernetes/audit.yaml
     enableAdmissionPlugins:
-    - Initializers
     - NamespaceLifecycle
     - LimitRanger
     - ServiceAccount
@@ -246,7 +245,7 @@ spec:
       admissionregistration.k8s.io/v1alpha1: "true"
   kubernetesApiAccess:
   - 0.0.0.0/0
-  kubernetesVersion: 1.13.12
+  kubernetesVersion: 1.14.10
   masterPublicName: api.david-test2.cloud-platform.service.justice.gov.uk
   networkCIDR: 172.20.0.0/16
   networkID: vpc-0acfc718557a7dd7a
@@ -321,8 +320,8 @@ metadata:
     kops.k8s.io/cluster: david-test2.cloud-platform.service.justice.gov.uk
   name: master-eu-west-2a
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
   machineType: c4.large
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -348,8 +347,8 @@ metadata:
     kops.k8s.io/cluster: david-test2.cloud-platform.service.justice.gov.uk
   name: master-eu-west-2b
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
   machineType: c4.large
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -375,8 +374,8 @@ metadata:
     kops.k8s.io/cluster: david-test2.cloud-platform.service.justice.gov.uk
   name: master-eu-west-2c
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
   machineType: c4.large
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -402,8 +401,8 @@ metadata:
     kops.k8s.io/cluster: david-test2.cloud-platform.service.justice.gov.uk
   name: nodes-r52xl
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
   machineType: r5.large
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   maxSize: 3
   minSize: 3
   rootVolumeSize: 256
