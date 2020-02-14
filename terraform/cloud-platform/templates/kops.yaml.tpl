@@ -230,7 +230,6 @@ spec:
     auditLogMaxSize: 100
     auditPolicyFile: /srv/kubernetes/audit.yaml
     enableAdmissionPlugins:
-    - Initializers
     - NamespaceLifecycle
     - LimitRanger
     - ServiceAccount
