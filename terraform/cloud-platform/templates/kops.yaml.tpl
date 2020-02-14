@@ -243,6 +243,11 @@ spec:
     - PodSecurityPolicy
     runtimeConfig:
       admissionregistration.k8s.io/v1alpha1: "true"
+    featureGates:
+      TTLAfterFinished: "true"
+  kubeControllerManager:
+    featureGates:
+      TTLAfterFinished: "true"
   kubernetesApiAccess:
   - 0.0.0.0/0
   kubernetesVersion: 1.14.10
