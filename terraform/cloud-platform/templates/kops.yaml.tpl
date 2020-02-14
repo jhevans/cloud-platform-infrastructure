@@ -308,7 +308,7 @@ metadata:
     kops.k8s.io/cluster: ${cluster_domain_name}
   name: master-eu-west-2a
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   machineType: ${master_node_machine_type}
   maxSize: 1
   minSize: 1
@@ -335,7 +335,7 @@ metadata:
     kops.k8s.io/cluster: ${cluster_domain_name}
   name: master-eu-west-2b
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   machineType: ${master_node_machine_type}
   maxSize: 1
   minSize: 1
@@ -362,7 +362,7 @@ metadata:
     kops.k8s.io/cluster: ${cluster_domain_name}
   name: master-eu-west-2c
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   machineType: ${master_node_machine_type}
   maxSize: 1
   minSize: 1
@@ -389,7 +389,7 @@ metadata:
     kops.k8s.io/cluster: ${cluster_domain_name}
   name: nodes-r52xl
 spec:
-  image: kope.io/k8s-1.13-debian-stretch-amd64-hvm-ebs-2019-08-16
+  image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
   machineType: ${worker_node_machine_type}
   maxSize: ${cluster_node_count}
   minSize: ${cluster_node_count}
