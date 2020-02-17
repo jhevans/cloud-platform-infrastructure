@@ -1,0 +1,196 @@
+Run options: exclude {:cluster=>"live-1"}
+
+Alertmanager resources
+  expected Alertmanager resources
+
+cert-manager
+  when a certificate resource is created
+    returns valid certificate from an openssl call
+
+certificates
+  expected Certificate
+
+crds
+  expected crds
+
+daemonsets
+  expected daemonsets
+  fluentd
+    runs fluentd
+    all fluentd containers are running
+  kiam
+    all containers are running
+    agent
+      runs on workers
+      doesn't run on masters
+    server
+      runs on workers
+      doesn't run on masters
+  prometheus exporter
+    runs on all nodes
+    all containers are running
+  calico
+    runs on all nodes
+    all containers are running
+
+docker-registry-cache
+  pod
+    one pod running
+    running the cache image
+    logs output when a container is launched
+  ingress
+    one ingress
+    ingress hostname
+    whitelist annotation
+
+http request error responses
+  cluster default backend
+    when the error is 404
+      serves the cluster's error page (PENDING: Temporarily skipped with xdescribe)
+  in a namespace with the HTTP handler
+    when the error code is in the cluster error list
+      serves the cluster's custom error page (PENDING: Temporarily skipped with xdescribe)
+    when the error code is not in the cluster error list
+      serves no error page (PENDING: Temporarily skipped with xdescribe)
+    when namespace defines list of errors including anything not in cluster list
+      when the error is in the cluster error list and application not serving error page
+        serves error page from nginx ingress (PENDING: Temporarily skipped with xdescribe)
+      when the error is in the cluster error list and application serving error
+        serves error page from application (PENDING: Temporarily skipped with xdescribe)
+      when the error is not in the cluster error list
+        serves no error page (PENDING: Temporarily skipped with xdescribe)
+    when namespace has error list which is a subset of cluster-level error list
+      when the error is in the namespace error list
+        serves cluster error page for error in the list (PENDING: Temporarily skipped with xdescribe)
+      when the error is not in the namespace error list
+        serves no error page for error not in the list (PENDING: Temporarily skipped with xdescribe)
+    when namespace has its own default backend
+      when ingress is annotated with default-backend service but not with the list of http errors
+        serves the cluster's custom error page (PENDING: Temporarily skipped with xdescribe)
+      when ingress is annotated with an error code not from the cluster error list
+        application not serving error pages
+          serves error page from namespace default backend. (PENDING: Temporarily skipped with xdescribe)
+        application is serving error pages
+          serves error page from application (PENDING: Temporarily skipped with xdescribe)
+        error raised is same as annotated error code
+          serves error page from namespace default backend (PENDING: Temporarily skipped with xdescribe)
+      when the ingress is annotated with an error code from the cluster error list
+        serves 503 error page from namespace default backend (PENDING: Temporarily skipped with xdescribe)
+
+nginx ingress
+  when ingress is not deployed
+    fails http get
+  when ingress is deployed
+    returns 200 for http get
+  when ingress is deployed with invalid syntax
+    is rejected by the admission webhook
+
+Clusterissuer
+  expected Clusterissuer
+
+Issuer
+  expected Issuer
+
+kiam
+  namespace has annotations
+    pod has annotations
+      can assume role
+    pod does not have annotations
+      cannot assume role
+  namespace has no annotations
+    pod has annotations
+      cannot assume role
+    pod does not have annotations
+      cannot assume role
+
+Testing modsec
+  when modsec deployed
+    when the url is benign
+      request succeeds
+    when the url is malicious
+      request is blocked
+  when modsec disabled
+    when the url is benign
+      request succeeds
+    when the url is malicious
+      request succeeds
+
+namespace
+  when group is webops
+    allows webops to access namespace
+    allows webops to access pods
+  when group is not webops
+    does not allow non-webops to access namespace
+    does not allow non-webops to access pods
+  when group is test-webops
+    allows non-webops to access pods
+    allows non-webops to access namespace
+
+Prometheus
+  expected Prometheus resource
+
+Prometheus Rules
+  expected in all clusters
+
+servicemonitors
+  expected prometheus servicemonitors
+  expected nginx-ingress servicemonitors
+  expected velero servicemonitors
+
+Pending: (Failures listed here are expected and do not affect your suite's status)
+
+  1) http request error responses cluster default backend when the error is 404 serves the cluster's error page
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:56
+
+  2) http request error responses in a namespace with the HTTP handler when the error code is in the cluster error list serves the cluster's custom error page
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:94
+
+  3) http request error responses in a namespace with the HTTP handler when the error code is not in the cluster error list serves no error page
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:102
+
+  4) http request error responses in a namespace with the HTTP handler when namespace defines list of errors including anything not in cluster list when the error is in the cluster error list and application not serving error page serves error page from nginx ingress
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:125
+
+  5) http request error responses in a namespace with the HTTP handler when namespace defines list of errors including anything not in cluster list when the error is in the cluster error list and application serving error serves error page from application
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:133
+
+  6) http request error responses in a namespace with the HTTP handler when namespace defines list of errors including anything not in cluster list when the error is not in the cluster error list serves no error page
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:141
+
+  7) http request error responses in a namespace with the HTTP handler when namespace has error list which is a subset of cluster-level error list when the error is in the namespace error list serves cluster error page for error in the list
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:158
+
+  8) http request error responses in a namespace with the HTTP handler when namespace has error list which is a subset of cluster-level error list when the error is not in the namespace error list serves no error page for error not in the list
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:166
+
+  9) http request error responses in a namespace with the HTTP handler when namespace has its own default backend when ingress is annotated with default-backend service but not with the list of http errors serves the cluster's custom error page
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:183
+
+  10) http request error responses in a namespace with the HTTP handler when namespace has its own default backend when ingress is annotated with an error code not from the cluster error list application not serving error pages serves error page from namespace default backend.
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:200
+
+  11) http request error responses in a namespace with the HTTP handler when namespace has its own default backend when ingress is annotated with an error code not from the cluster error list application is serving error pages serves error page from application
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:206
+
+  12) http request error responses in a namespace with the HTTP handler when namespace has its own default backend when ingress is annotated with an error code not from the cluster error list error raised is same as annotated error code serves error page from namespace default backend
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:215
+
+  13) http request error responses in a namespace with the HTTP handler when namespace has its own default backend when the ingress is annotated with an error code from the cluster error list serves 503 error page from namespace default backend
+     # Temporarily skipped with xdescribe
+     # ./spec/error_page_spec.rb:225
+
+Finished in 7 minutes 58 seconds (files took 2.76 seconds to load)
+59 examples, 0 failures, 13 pending
+

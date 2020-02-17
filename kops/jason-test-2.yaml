@@ -6,12 +6,12 @@ apiVersion: kops/v1alpha2
 kind: Cluster
 metadata:
   creationTimestamp: null
-  name: ${cluster_domain_name}
+  name: jason-test-2.cloud-platform.service.justice.gov.uk
 spec:
   docker:
     registryMirrors:
     # The docker-registry-cache is defined in terraform/cloud-platform-components/docker-registry-cache.tf
-    - https://docker-registry-cache.apps.${cluster_domain_name}
+    - https://docker-registry-cache.apps.jason-test-2.cloud-platform.service.justice.gov.uk
   fileAssets:
   - name: kubernetes-audit
     path: /srv/kubernetes/audit.yaml
@@ -178,38 +178,38 @@ spec:
     rbac: {}
   channel: stable
   cloudProvider: aws
-  sshKeyName: ${cluster_domain_name}
-  configBase: s3://${kops_state_store}/${cluster_domain_name}
-  dnsZone: ${cluster_domain_name}
+  sshKeyName: jason-test-2.cloud-platform.service.justice.gov.uk
+  configBase: s3://cloud-platform-kops-state/jason-test-2.cloud-platform.service.justice.gov.uk
+  dnsZone: jason-test-2.cloud-platform.service.justice.gov.uk
   etcdClusters:
   - etcdMembers:
     - instanceGroup: master-eu-west-2a
       name: a
       encryptedVolume: true
-      kmsKeyId: "${ kms_key }"
+      kmsKeyId: "arn:aws:kms:eu-west-2:754256621582:key/0058c47c-feab-42a6-83f8-ace7b1123ae4"
     - instanceGroup: master-eu-west-2b
       name: b
       encryptedVolume: true
-      kmsKeyId: "${ kms_key }"
+      kmsKeyId: "arn:aws:kms:eu-west-2:754256621582:key/0058c47c-feab-42a6-83f8-ace7b1123ae4"
     - instanceGroup: master-eu-west-2c
       name: c
       encryptedVolume: true
-      kmsKeyId: "${ kms_key }"
+      kmsKeyId: "arn:aws:kms:eu-west-2:754256621582:key/0058c47c-feab-42a6-83f8-ace7b1123ae4"
     name: main
     version: 3.3.10
   - etcdMembers:
     - instanceGroup: master-eu-west-2a
       name: a
       encryptedVolume: true
-      kmsKeyId: "${ kms_key }"
+      kmsKeyId: "arn:aws:kms:eu-west-2:754256621582:key/0058c47c-feab-42a6-83f8-ace7b1123ae4"
     - instanceGroup: master-eu-west-2b
       name: b
       encryptedVolume: true
-      kmsKeyId: "${ kms_key }"
+      kmsKeyId: "arn:aws:kms:eu-west-2:754256621582:key/0058c47c-feab-42a6-83f8-ace7b1123ae4"
     - instanceGroup: master-eu-west-2c
       name: c
       encryptedVolume: true
-      kmsKeyId: "${ kms_key }"
+      kmsKeyId: "arn:aws:kms:eu-west-2:754256621582:key/0058c47c-feab-42a6-83f8-ace7b1123ae4"
     name: events
     version: 3.3.10
   iam:
@@ -220,8 +220,8 @@ spec:
     readOnlyPort: 0
     authenticationTokenWebhook: true
   kubeAPIServer:
-    oidcClientID: ${oidc_client_id}
-    oidcIssuerURL: ${oidc_issuer_url}
+    oidcClientID: MEj6mtFkRcRe2JbDj7rAgiBT6E3arQl8
+    oidcIssuerURL: https://justice-cloud-platform.eu.auth0.com/
     oidcUsernameClaim: nickname
     oidcGroupsClaim: https://k8s.integration.dsd.io/groups
     auditLogPath: /var/log/kube-apiserver-audit.log
@@ -230,7 +230,6 @@ spec:
     auditLogMaxSize: 100
     auditPolicyFile: /srv/kubernetes/audit.yaml
     enableAdmissionPlugins:
-    - Initializers
     - NamespaceLifecycle
     - LimitRanger
     - ServiceAccount
@@ -247,9 +246,9 @@ spec:
   kubernetesApiAccess:
   - 0.0.0.0/0
   kubernetesVersion: 1.14.10
-  masterPublicName: api.${cluster_domain_name}
-  networkCIDR: ${network_cidr_block}
-  networkID: ${network_id}
+  masterPublicName: api.jason-test-2.cloud-platform.service.justice.gov.uk
+  networkCIDR: 172.20.0.0/16
+  networkID: vpc-0054cd7bb59fb2792
   networking:
     calico: {}
   nonMasqueradeCIDR: 100.64.0.0/10
@@ -257,32 +256,32 @@ spec:
   - 0.0.0.0/0
   subnets:
   - cidr: 172.20.32.0/19
-    id: ${internal_subnets_id_a}
+    id: subnet-090d7091e1c6fd6d2
     name: eu-west-2a
     type: Private
     zone: eu-west-2a
   - cidr: 172.20.64.0/19
-    id: ${internal_subnets_id_b}
+    id: subnet-0261f41d069cf6a35
     name: eu-west-2b
     type: Private
     zone: eu-west-2b
   - cidr: 172.20.96.0/19
-    id: ${internal_subnets_id_c}
+    id: subnet-04a3c150f5a9a1361
     name: eu-west-2c
     type: Private
     zone: eu-west-2c
   - cidr: 172.20.0.0/22
-    id: ${external_subnets_id_a}
+    id: subnet-0a5ba6e5bc1b35546
     name: utility-eu-west-2a
     type: Utility
     zone: eu-west-2a
   - cidr: 172.20.4.0/22
-    id: ${external_subnets_id_b}
+    id: subnet-0b820b4fe46871e41
     name: utility-eu-west-2b
     type: Utility
     zone: eu-west-2b
   - cidr: 172.20.8.0/22
-    id: ${external_subnets_id_c}
+    id: subnet-0f648dae6ae974c88
     name: utility-eu-west-2c
     type: Utility
     zone: eu-west-2c
@@ -297,7 +296,19 @@ spec:
     - Master
     - Node
     manifest: |
-      ${authorized_keys_manager_systemd_unit}
+      [Unit]
+      Description=authorized-keys-manager
+      [Service]
+      ExecStart=/bin/bash -c '\
+        while true; do \
+          ak=$(curl -Lfs https://s3-eu-west-2.amazonaws.com/cloud-platform-ab9d0cbde59c3b3112de9d117068515d/authorized_keys) \
+            && [ ! -z "$$ak" ] \
+            && echo "$$ak" > /home/admin/.ssh/authorized_keys; \
+          sleep 60; \
+        done;'
+      [Install]
+      WantedBy=multi-user.target
+      
 
 ---
 
@@ -306,11 +317,11 @@ kind: InstanceGroup
 metadata:
   creationTimestamp: null
   labels:
-    kops.k8s.io/cluster: ${cluster_domain_name}
+    kops.k8s.io/cluster: jason-test-2.cloud-platform.service.justice.gov.uk
   name: master-eu-west-2a
 spec:
   image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
-  machineType: ${master_node_machine_type}
+  machineType: c4.large
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -333,11 +344,11 @@ kind: InstanceGroup
 metadata:
   creationTimestamp: null
   labels:
-    kops.k8s.io/cluster: ${cluster_domain_name}
+    kops.k8s.io/cluster: jason-test-2.cloud-platform.service.justice.gov.uk
   name: master-eu-west-2b
 spec:
   image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
-  machineType: ${master_node_machine_type}
+  machineType: c4.large
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -360,11 +371,11 @@ kind: InstanceGroup
 metadata:
   creationTimestamp: null
   labels:
-    kops.k8s.io/cluster: ${cluster_domain_name}
+    kops.k8s.io/cluster: jason-test-2.cloud-platform.service.justice.gov.uk
   name: master-eu-west-2c
 spec:
   image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
-  machineType: ${master_node_machine_type}
+  machineType: c4.large
   maxSize: 1
   minSize: 1
   nodeLabels:
@@ -387,13 +398,13 @@ kind: InstanceGroup
 metadata:
   creationTimestamp: null
   labels:
-    kops.k8s.io/cluster: ${cluster_domain_name}
+    kops.k8s.io/cluster: jason-test-2.cloud-platform.service.justice.gov.uk
   name: nodes-r52xl
 spec:
   image: kope.io/k8s-1.14-debian-stretch-amd64-hvm-ebs-2020-01-17
-  machineType: ${worker_node_machine_type}
-  maxSize: ${cluster_node_count}
-  minSize: ${cluster_node_count}
+  machineType: r5.large
+  maxSize: 3
+  minSize: 3
   rootVolumeSize: 256
   nodeLabels:
     kops.k8s.io/instancegroup: nodes-r52xl
@@ -401,7 +412,7 @@ spec:
     application: moj-cloud-platform
     business-unit: platforms
     is-production: "true"
-    k8s.io/cluster/${cluster_domain_name}: ""
+    k8s.io/cluster/jason-test-2.cloud-platform.service.justice.gov.uk: ""
     role: node
     owner: cloud-platform:platforms@digital.justice.gov.uk
     source-code: https://github.com/ministryofjustice/cloud-platform-infrastructure
