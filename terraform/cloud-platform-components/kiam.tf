@@ -122,7 +122,6 @@ resource "helm_release" "kiam" {
   ]
 
   depends_on = [
-    null_resource.deploy,
     helm_release.open-policy-agent,
   ]
 

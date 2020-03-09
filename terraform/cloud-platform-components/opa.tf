@@ -25,17 +25,17 @@ resource "helm_release" "open-policy-agent" {
   namespace  = "opa"
   repository = "stable"
   chart      = "opa"
-  version    = "1.8.0"
+  #version    = "1.8.0"
+  version    = "1.13.4"
 
   depends_on = [
     null_resource.kube_system_ns_label,
     kubernetes_namespace.opa,
-    null_resource.deploy,
   ]
 
-  values = [
-    data.template_file.values.rendered,
-  ]
+  # values = [
+  #   data.template_file.values.rendered,
+  # ]
 
   lifecycle {
     ignore_changes = [keyring]

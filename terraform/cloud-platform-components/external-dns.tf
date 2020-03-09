@@ -83,7 +83,6 @@ EOF
 ]
 
 depends_on = [
-  null_resource.deploy,
   helm_release.kiam,
   helm_release.open-policy-agent,
 ]

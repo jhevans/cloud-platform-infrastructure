@@ -8,7 +8,7 @@ module "prometheus" {
   enable_ecr_exporter          = terraform.workspace == local.live_workspace ? true : false
   enable_cloudwatch_exporter   = terraform.workspace == local.live_workspace ? true : false
 
-  dependence_deploy = null_resource.deploy
+  dependence_deploy = "nothing-helm-3-is-live-now"
   dependence_opa    = helm_release.open-policy-agent
 }
 

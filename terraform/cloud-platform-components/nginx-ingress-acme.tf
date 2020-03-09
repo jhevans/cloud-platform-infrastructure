@@ -161,7 +161,6 @@ EOF
   // self-signed certificate until the proper one becomes available. This
   // dependency is not captured here.
   depends_on = [
-    null_resource.deploy,
     module.prometheus.helm_prometheus_operator_status,
     kubernetes_namespace.ingress_controllers,
     helm_release.open-policy-agent,

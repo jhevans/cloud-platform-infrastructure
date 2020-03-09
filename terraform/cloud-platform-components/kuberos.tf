@@ -53,8 +53,6 @@ resource "helm_release" "kuberos" {
     value = "2"
   }
 
-  depends_on = [null_resource.deploy]
-
   lifecycle {
     ignore_changes = [keyring]
   }
