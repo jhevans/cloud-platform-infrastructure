@@ -20,10 +20,11 @@ resource "kubernetes_namespace" "ingress_controllers" {
 }
 
 resource "helm_release" "nginx_ingress_acme" {
-  name      = "nginx-ingress-acme"
-  chart     = "stable/nginx-ingress"
-  namespace = "ingress-controllers"
-  version   = "v1.24.0"
+  name       = "nginx-ingress-acme"
+  repository = data.helm_repository.stable.metadata[0].name
+  chart      = "nginx-ingress"
+  namespace  = "ingress-controllers"
+  version    = "v1.24.0"
 
   values = [
     <<EOF

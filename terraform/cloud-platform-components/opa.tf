@@ -19,7 +19,7 @@ resource "kubernetes_namespace" "opa" {
 resource "helm_release" "open-policy-agent" {
   name       = "opa"
   namespace  = kubernetes_namespace.opa.id
-  repository = "stable"
+  repository = data.helm_repository.stable.metadata[0].name
   chart      = "opa"
   version    = "1.13.4"
 

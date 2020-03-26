@@ -82,7 +82,7 @@ resource "aws_iam_role_policy" "velero" {
 resource "helm_release" "velero" {
   name       = "velero"
   namespace  = "velero"
-  repository = "stable"
+  repository = data.helm_repository.stable.metadata[0].name
   chart      = "velero"
   version    = "2.3.3"
 

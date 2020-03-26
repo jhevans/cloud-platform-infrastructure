@@ -1,8 +1,9 @@
 resource "helm_release" "metrics_server" {
-  name      = "metrics-server"
-  chart     = "stable/metrics-server"
-  namespace = "kube-system"
-  version   = "2.8.8"
+  name       = "metrics-server"
+  chart      = "metrics-server"
+  repository = data.helm_repository.stable.metadata[0].name
+  namespace  = "kube-system"
+  version    = "2.8.8"
 
   lifecycle {
     ignore_changes = [keyring]
