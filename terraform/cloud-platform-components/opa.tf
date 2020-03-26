@@ -25,7 +25,6 @@ resource "helm_release" "open-policy-agent" {
 
   depends_on = [
     null_resource.kube_system_ns_label,
-    null_resource.deploy,
   ]
 
   values = [templatefile("${path.module}/templates/opa/values.yaml.tpl", {})]
