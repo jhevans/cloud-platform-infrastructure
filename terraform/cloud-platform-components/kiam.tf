@@ -1,3 +1,28 @@
+#############
+# Namespace #
+#############
+
+resource "kubernetes_namespace" "kiam" {
+  metadata {
+    name = "kiam"
+
+    labels = {
+      "name"                                           = "kiam"
+      "component"                                      = "kiam"
+      "cloud-platform.justice.gov.uk/environment-name" = "production"
+      "cloud-platform.justice.gov.uk/is-production"    = "true"
+    }
+
+    annotations = {
+      "cloud-platform.justice.gov.uk/application"                   = "Kubernetes kiam component"
+      "cloud-platform.justice.gov.uk/business-unit"                 = "cloud-platform"
+      "cloud-platform.justice.gov.uk/owner"                         = "Cloud Platform: platforms@digital.justice.gov.uk"
+      "cloud-platform.justice.gov.uk/source-code"                   = "https://github.com/ministryofjustice/cloud-platform-infrastructure"
+      "cloud-platform.justice.gov.uk/can-use-loadbalancer-services" = "true"
+    }
+  }
+}
+
 resource "tls_private_key" "ca" {
   algorithm   = "ECDSA"
   ecdsa_curve = "P384"
@@ -114,7 +139,7 @@ resource "helm_release" "kiam" {
   name          = "kiam"
   chart         = "kiam"
   repository    = data.helm_repository.stable.metadata[0].name
-  namespace     = "kiam"
+  namespace     = kubernetes_namespace.kiam.id
   version       = "2.4.0"
   recreate_pods = "true"
 
